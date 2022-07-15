@@ -33,7 +33,7 @@ help = [
 ];
 
 banner = [
-  '<span class="index">Da Vinci Jaegerjaquez. Reiatsu is Life!!!.</span>',
+  '<span class="color2">Da Vinci Jaegerjaquez. Reiatsu is Life!!!.</span>',
 
 "  ____    _     __     _____ _   _  ____ ___ ",
 "|  _  \\ /   \\  \\\\   / /_ _|\\ | |/ ___|_ _|",
