@@ -1,13 +1,11 @@
-var before = document.getElementById("before");
-var liner = document.getElementById("liner");
-var command = document.getElementById("typer");
-var textarea = document.getElementById("texter");
-var terminal = document.getElementById("terminal");
-
-var git = 0;
-var pw = false;
-let pwd = false;
-var commands = [];
+let before = document.getElementById("before");
+let liner = document.getElementById("liner");
+let command = document.getElementById("typer");
+let textarea = document.getElementById("texter");
+let terminal = document.getElementById("terminal");
+let userName = document.getElementById("liner").getElementsByClassName("userName")[0];
+let git = 0;
+let commands = [];
 
 setTimeout(function() {
   loopLines(banner, "", 80);
@@ -28,33 +26,11 @@ command.innerHTML = textarea.value;
 function enterKey(e) {
   if (e.keyCode == 181) {
     document.location.reload(true);
-  }
-  if (pw) {
-    let et = "*";
-    let w = textarea.value.length;
-    command.innerHTML = et.repeat(w);
-    if (textarea.value === password) {
-      pwd = true;
-    }
-    if (pwd && e.keyCode == 13) {
-      loopLines(secret, "color2 margin", 120);
-      command.innerHTML = "";
-      textarea.value = "";
-      pwd = false;
-      pw = false;
-      liner.classList.remove("password");
-    } else if (e.keyCode == 13) {
-      addLine("Wrong password", "error", 0);
-      command.innerHTML = "";
-      textarea.value = "";
-      pw = false;
-      liner.classList.remove("password");
-    }
   } else {
     if (e.keyCode == 13) {
       commands.push(command.innerHTML);
       git = commands.length;
-      addLine("visitor@davinci:~$ " + command.innerHTML, "color3", 0);
+      addLine(`${currentUser}`  + command.innerHTML, "color3", 0);
       commander(command.innerHTML.toLowerCase());
       command.innerHTML = "";
       textarea.value = "";
@@ -77,7 +53,8 @@ function enterKey(e) {
 }
 
 function commander(cmd) {
-  switch (cmd.toLowerCase()) {
+  const extra = cmd.split(" ");
+  switch (extra[0].toLowerCase()) {
     case "help":
       loopLines(help, "color2 margin", 80);
       break;
@@ -85,11 +62,17 @@ function commander(cmd) {
       loopLines(whois, "color2 margin", 80);
       break;
     case "whoami":
-      loopLines(whoami, "color2 margin", 80);
+      loopLines(["You are " + currentUser.split('@')[0]], "color2 margin", 80);
       break;
-    case "secret":
-      liner.classList.add("password");
-      pw = true;
+    case "login":
+      if(extra.length == 2 && users.includes(extra[1])) {
+        let newUser = extra[1] + baseName;
+        currentUser = newUser;
+        userName.textContent = newUser;
+      } else {
+        addLine("<span class=\"inherit\">Incorrect use of login or user not found</span>", "error", 100);
+      }
+
       break;
     case "history":
       addLine("<br>", "", 0);
@@ -127,7 +110,6 @@ function addLine(text, style, time) {
       t += text.charAt(i);
     }
   }
-  console.log(t);
   setTimeout(function() {
     var next = document.createElement("p");
     next.innerHTML = t;

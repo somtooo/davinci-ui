@@ -1,3 +1,4 @@
+
 body {
   margin: 0;
   padding: 15px 20px;
@@ -59,13 +60,13 @@ b {
   animation-delay: 1.2s;
   opacity: 0;
 }
-#liner::before {
+
+
+.userName {
   color: #75e1e7;
-  content: "visitor@davinci:~$";
 }
-#liner.password::before {
-  content: "Password:";
-}
+
+
 @keyframes show {
   from {
     opacity: 0;
