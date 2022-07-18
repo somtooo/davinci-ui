@@ -65,6 +65,7 @@ function commander(cmd) {
       loopLines(["You are " + currentUser.split('@')[0]], "color2 margin", 80);
       break;
     case "login":
+      if(currentUser.split('@')[0] != extra[1]){
       if(extra.length == 2 && users.includes(extra[1])) {
         let newUser = extra[1] + baseName;
         currentUser = newUser;
@@ -72,12 +73,28 @@ function commander(cmd) {
       } else {
         addLine("<span class=\"inherit\">Incorrect use of login or user not found</span>", "error", 100);
       }
+    } else {
+      addLine("<span class=\"inherit\">User already logged in</span>", "error", 100);
 
+    }
+      break;
+    case "signup":
+      if(extra.length == 2) {
+        if(users.includes(extra[1])) {
+          addLine("<span class=\"inherit\">Already signedUp please login</span>", "error", 100);
+        } else if(!users.includes(extra[1])) {
+          users.push(extra[1]);
+          commander("login " + extra[1]);
+        } else {
+          addLine("<span class=\"inherit\">Incorrect use of signup</span>", "error", 100);
+        }
+      }
+      break;
+    case "logout":
+      currentUser = "visitor" + baseName;
       break;
     case "history":
-      addLine("<br>", "", 0);
       loopLines(commands, "color2", 80);
-      addLine("<br>", "command", 80 * commands.length + 50);
       break;
     case "clear":
       setTimeout(function() {
