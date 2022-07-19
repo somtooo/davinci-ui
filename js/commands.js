@@ -12,6 +12,7 @@ help = [
   '<span class="command">whoami</span>         Who are you?',
   '<span class="command">login</span>          `login [username]`',
   '<span class="command">signup</span>         `signup [username]`',
+  '<span class="command">logout</span>         `logout`',
   '<span class="command">mic</span>            not implemented',
   '<span class="command">gui</span>            not implemented',
   '<span class="command">history</span>        View command history',

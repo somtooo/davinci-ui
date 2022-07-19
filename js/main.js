@@ -92,6 +92,7 @@ function commander(cmd) {
       break;
     case "logout":
       currentUser = "visitor" + baseName;
+      userName.textContent = currentUser;
       break;
     case "history":
       loopLines(commands, "color2", 80);
