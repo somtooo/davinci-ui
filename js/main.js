@@ -5,6 +5,9 @@ let textarea = document.getElementById("texter");
 let terminal = document.getElementById("terminal");
 let userName = document.getElementById("liner").getElementsByClassName("userName")[0];
 let git = 0;
+const Http = new XMLHttpRequest();
+const url = "http://localhost:3000/command";
+
 let commands = [];
 
 setTimeout(function() {
@@ -16,11 +19,14 @@ setTimeout(function() {
 }, 100);
 
 window.addEventListener("keyup", enterKey);
+let result = undefined;
+
 
 
 
 //init
 textarea.value = "";
+
 command.innerHTML = textarea.value;
 
 function enterKey(e) {
@@ -103,6 +109,17 @@ function commander(cmd) {
         before = document.getElementById("before");
       }, 1);
       break;
+    case "vinci":
+      if(!(currentUser === "visitor" + baseName)) {
+      console.log(extra.slice(1));
+      setupHttpReq();
+      Http.send(JSON.stringify(extra.slice(1)));
+      addLine(`<span"> ${result} </span>`, "color4", 100);
+      } else {
+        addLine("<span class=\"inherit\">You must be logged in to use this command</span>", "error", 100);
+
+      }
+      break;
     case "banner":
       loopLines(banner, "", 80);
       break;
@@ -111,6 +128,18 @@ function commander(cmd) {
       break;
   }
 }
+
+function setupHttpReq() {
+  Http.open("POST", url, false);
+  Http.setRequestHeader("Content-Type", "application/json");
+  Http.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      result = Http.responseText;
+    }
+  };
+}
+
+
 
 function newTab(link) {
   setTimeout(function() {
